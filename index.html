@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apex Creative — We Build the Extraordinary</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sky: {
+              primary: '#0EA5E9',
+              light:   '#38BDF8',
+              bg:      '#F0F9FF',
+              deep:    '#0C4A6E',
+            },
+            accent: '#F97316',
+          },
+          fontFamily: {
+            heading: ['Archivo', 'sans-serif'],
+            body:    ['Space Grotesk', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #F0F9FF;
+      color: #0C4A6E;
+      overflow-x: hidden;
+    }
+
+    /* ── Fluid hero type ── */
+    .hero-title {
+      font-family: 'Archivo', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 11rem);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+    }
+
+    .section-title {
+      font-family: 'Archivo', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+    }
+
+    /* ── Gradient text ── */
+    .gradient-text {
+      background: linear-gradient(135deg, #0EA5E9 0%, #38BDF8 40%, #F97316 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Noise overlay on hero ── */
+    .noise-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Marquee ── */
+    .marquee-track {
+      display: flex;
+      gap: 4rem;
+      white-space: nowrap;
+      animation: marquee 28s linear infinite;
+      will-change: transform;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track { animation: none; }
+    }
+
+    /* ── Reveal animation ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── Work card ── */
+    .work-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.25rem;
+      cursor: pointer;
+    }
+    .work-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+      will-change: transform;
+    }
+    .work-card:hover img { transform: scale(1.06); }
+    .work-card .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12,74,110,0.92) 0%, rgba(14,165,233,0.15) 100%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+    }
+    .work-card:hover .overlay { opacity: 1; }
+
+    /* ── Service card ── */
+    .service-card {
+      border: 1.5px solid #BAE6FD;
+      border-radius: 1.25rem;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.25s cubic-bezier(.16,1,.3,1);
+      cursor: pointer;
+    }
+    .service-card:hover {
+      border-color: #0EA5E9;
+      box-shadow: 0 20px 60px rgba(14,165,233,0.18);
+      transform: translateY(-4px);
+    }
+
+    /* ── Counter ── */
+    .stat-num {
+      font-family: 'Archivo', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    /* ── CTA button ── */
+    .btn-primary {
+      background: #F97316;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      border-radius: 9999px;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.18s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover {
+      background: #ea6c0c;
+      box-shadow: 0 12px 40px rgba(249,115,22,0.4);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      border: 2px solid #0EA5E9;
+      color: #0EA5E9;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      border-radius: 9999px;
+      transition: background 0.2s, color 0.2s, transform 0.18s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-secondary:hover {
+      background: #0EA5E9;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .navbar.scrolled {
+      background: rgba(240,249,255,0.92);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 30px rgba(14,165,233,0.1);
+    }
+
+    /* ── Cursor dot ── */
+    #cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #F97316;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.25s ease, height 0.25s ease, background 0.25s;
+      mix-blend-mode: multiply;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid #0EA5E9;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s;
+    }
+    body:has(a:hover, button:hover, .work-card:hover) #cursor {
+      width: 20px;
+      height: 20px;
+      background: #0EA5E9;
+    }
+    body:has(a:hover, button:hover, .work-card:hover) #cursor-ring {
+      width: 56px;
+      height: 56px;
+      border-color: #F97316;
+    }
+    @media (hover: none) { #cursor, #cursor-ring { display: none; } }
+
+    /* ── Horizontal rule accent ── */
+    .accent-line {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #0EA5E9, #F97316);
+      border-radius: 2px;
+    }
+
+    /* ── Testimonial card ── */
+    .testimonial-card {
+      background: rgba(255,255,255,0.8);
+      border: 1.5px solid #BAE6FD;
+      border-radius: 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+
+    /* ── Input ── */
+    .form-input {
+      background: rgba(255,255,255,0.8);
+      border: 1.5px solid #BAE6FD;
+      border-radius: 0.75rem;
+      color: #0C4A6E;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-input::placeholder { color: #7DD3FC; }
+    .form-input:focus {
+      border-color: #0EA5E9;
+      box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom cursor (desktop only) -->
+  <div id="cursor" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════ -->
+  <header id="navbar" class="navbar fixed top-4 left-4 right-4 z-50 rounded-2xl px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2" aria-label="Apex Creative Home">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#0EA5E9"/>
+        <path d="M8 24 L16 8 L24 24" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11 19 L21 19" stroke="#F97316" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span style="font-family:'Archivo',sans-serif;font-weight:900;font-size:1.1rem;letter-spacing:-0.03em;color:#0C4A6E;">APEX</span>
+    </a>
+
+    <!-- Nav links (desktop) -->
+    <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
+      <a href="#work"     class="text-sm font-medium text-sky-deep/70 hover:text-sky-primary transition-colors duration-200">Work</a>
+      <a href="#services" class="text-sm font-medium text-sky-deep/70 hover:text-sky-primary transition-colors duration-200">Services</a>
+      <a href="#about"    class="text-sm font-medium text-sky-deep/70 hover:text-sky-primary transition-colors duration-200">About</a>
+      <a href="#contact"  class="btn-primary text-sm px-5 py-2.5">Let's Talk</a>
+    </nav>
+
+    <!-- Mobile menu toggle -->
+    <button id="menu-btn" class="md:hidden p-2 rounded-lg hover:bg-sky-primary/10 transition-colors cursor-pointer" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+      <svg id="menu-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0C4A6E" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6"  x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-sky-bg/95 backdrop-blur-xl flex-col items-center justify-center gap-8" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+    <button id="menu-close" class="absolute top-7 right-7 p-2 cursor-pointer" aria-label="Close menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0C4A6E" stroke-width="2" stroke-linecap="round">
+        <line x1="18" y1="6"  x2="6"  y2="18"/>
+        <line x1="6"  y1="6"  x2="18" y2="18"/>
+      </svg>
+    </button>
+    <a href="#work"     class="section-title text-4xl text-sky-deep hover:text-sky-primary transition-colors" onclick="closeMobileMenu()">Work</a>
+    <a href="#services" class="section-title text-4xl text-sky-deep hover:text-sky-primary transition-colors" onclick="closeMobileMenu()">Services</a>
+    <a href="#about"    class="section-title text-4xl text-sky-deep hover:text-sky-primary transition-colors" onclick="closeMobileMenu()">About</a>
+    <a href="#contact"  class="btn-primary text-lg px-8 py-4 mt-4" onclick="closeMobileMenu()">Let's Talk</a>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       HERO
+  ════════════════════════════════════ -->
+  <section class="noise-bg relative min-h-screen flex flex-col justify-center pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+
+    <!-- Background orbs -->
+    <div class="absolute top-20 right-0 w-96 h-96 rounded-full opacity-20 pointer-events-none"
+         style="background:radial-gradient(circle, #38BDF8, transparent 70%); filter:blur(60px);"></div>
+    <div class="absolute bottom-10 left-0 w-72 h-72 rounded-full opacity-15 pointer-events-none"
+         style="background:radial-gradient(circle, #F97316, transparent 70%); filter:blur(60px);"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto w-full">
+
+      <!-- Eyebrow -->
+      <div class="reveal flex items-center gap-3 mb-8">
+        <div class="accent-line"></div>
+        <span class="text-sky-primary font-semibold text-sm tracking-widest uppercase">Creative Agency · Est. 2019</span>
+      </div>
+
+      <!-- Hero headline -->
+      <h1 class="hero-title reveal reveal-delay-1 text-sky-deep leading-none mb-6">
+        We build<br/>
+        <span class="gradient-text">the extra&shy;ordinary.</span>
+      </h1>
+
+      <!-- Subline -->
+      <p class="reveal reveal-delay-2 text-sky-deep/60 text-lg md:text-xl max-w-xl leading-relaxed mb-10" style="font-size:clamp(1rem,2vw,1.25rem);">
+        Brand identity, digital experiences, and motion that makes people stop, stare, and remember.
+      </p>
+
+      <!-- CTAs -->
+      <div class="reveal reveal-delay-3 flex flex-wrap gap-4">
+        <a href="#work" class="btn-primary px-8 py-4 text-base">
+          See Our Work
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#contact" class="btn-secondary px-8 py-4 text-base">Start a Project</a>
+      </div>
+
+      <!-- Stats row -->
+      <div class="reveal reveal-delay-4 grid grid-cols-3 gap-6 mt-20 max-w-lg">
+        <div>
+          <p class="stat-num text-sky-deep"><span class="counter" data-target="140">0</span>+</p>
+          <p class="text-sky-deep/50 text-sm font-medium mt-1">Projects Shipped</p>
+        </div>
+        <div>
+          <p class="stat-num gradient-text"><span class="counter" data-target="98">0</span>%</p>
+          <p class="text-sky-deep/50 text-sm font-medium mt-1">Client Satisfaction</p>
+        </div>
+        <div>
+          <p class="stat-num text-sky-deep"><span class="counter" data-target="12">0</span></p>
+          <p class="text-sky-deep/50 text-sm font-medium mt-1">Awards Won</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+      <span class="text-xs text-sky-deep tracking-widest uppercase">Scroll</span>
+      <svg width="16" height="24" viewBox="0 0 16 24" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="14" height="22" rx="7" stroke="#0C4A6E" stroke-width="1.5"/>
+        <circle cx="8" cy="8" r="2.5" fill="#0EA5E9" style="animation:scrollDot 1.6s ease-in-out infinite"/>
+      </svg>
+    </div>
+  </section>
+
+  <style>
+    @keyframes scrollDot {
+      0%,100% { transform: translateY(0); opacity:1; }
+      50%      { transform: translateY(8px); opacity:.4; }
+    }
+  </style>
+
+
+  <!-- ═══════════════════════════════════
+       MARQUEE
+  ════════════════════════════════════ -->
+  <div class="py-6 border-y border-sky-primary/10 overflow-hidden bg-white/40" aria-hidden="true">
+    <div class="marquee-track text-sky-deep/30 font-heading font-black text-2xl uppercase tracking-widest select-none">
+      <!-- Repeated twice for seamless loop -->
+      <span>Branding</span><span class="text-sky-primary">✦</span>
+      <span>Web Design</span><span class="text-accent">✦</span>
+      <span>Motion</span><span class="text-sky-primary">✦</span>
+      <span>Strategy</span><span class="text-accent">✦</span>
+      <span>UX/UI</span><span class="text-sky-primary">✦</span>
+      <span>Identity</span><span class="text-accent">✦</span>
+      <span>Digital</span><span class="text-sky-primary">✦</span>
+      <span>Creative</span><span class="text-accent">✦</span>
+      <!-- duplicate -->
+      <span>Branding</span><span class="text-sky-primary">✦</span>
+      <span>Web Design</span><span class="text-accent">✦</span>
+      <span>Motion</span><span class="text-sky-primary">✦</span>
+      <span>Strategy</span><span class="text-accent">✦</span>
+      <span>UX/UI</span><span class="text-sky-primary">✦</span>
+      <span>Identity</span><span class="text-accent">✦</span>
+      <span>Digital</span><span class="text-sky-primary">✦</span>
+      <span>Creative</span><span class="text-accent">✦</span>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       WORK
+  ════════════════════════════════════ -->
+  <section id="work" class="py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+
+      <!-- Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div class="reveal">
+          <div class="accent-line mb-4"></div>
+          <h2 class="section-title text-sky-deep">Selected<br/>Work</h2>
+        </div>
+        <p class="reveal reveal-delay-1 text-sky-deep/55 max-w-xs leading-relaxed">
+          From bold rebrands to immersive digital experiences — work that earns attention.
+        </p>
+      </div>
+
+      <!-- Work grid -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+
+        <!-- Large card -->
+        <div class="work-card md:col-span-7 h-80 md:h-[480px] reveal"
+             tabindex="0" role="button" aria-label="Flux — Rebrand & Campaign project">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80&auto=format&fit=crop"
+               alt="Flux brand redesign campaign" loading="lazy" />
+          <div class="overlay">
+            <span class="text-sky-light text-xs tracking-widest uppercase font-semibold mb-2">Branding · 2024</span>
+            <h3 class="text-white font-heading font-black text-3xl leading-tight mb-1">Flux</h3>
+            <p class="text-white/70 text-sm">Full rebrand & integrated campaign</p>
+          </div>
+        </div>
+
+        <!-- Tall card -->
+        <div class="work-card md:col-span-5 h-80 md:h-[480px] reveal reveal-delay-1"
+             tabindex="0" role="button" aria-label="Nova — Mobile App project">
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80&auto=format&fit=crop"
+               alt="Nova mobile app UI design" loading="lazy" />
+          <div class="overlay">
+            <span class="text-sky-light text-xs tracking-widest uppercase font-semibold mb-2">Mobile App · 2024</span>
+            <h3 class="text-white font-heading font-black text-3xl leading-tight mb-1">Nova</h3>
+            <p class="text-white/70 text-sm">Health & wellness tracking app</p>
+          </div>
+        </div>
+
+        <!-- Medium cards -->
+        <div class="work-card md:col-span-4 h-64 md:h-72 reveal reveal-delay-2"
+             tabindex="0" role="button" aria-label="Veil — Architecture Studio project">
+          <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&auto=format&fit=crop"
+               alt="Veil architecture studio website" loading="lazy" />
+          <div class="overlay">
+            <span class="text-sky-light text-xs tracking-widest uppercase font-semibold mb-2">Web Design · 2023</span>
+            <h3 class="text-white font-heading font-black text-2xl leading-tight mb-1">Veil</h3>
+            <p class="text-white/70 text-sm">Architecture studio identity</p>
+          </div>
+        </div>
+
+        <div class="work-card md:col-span-4 h-64 md:h-72 reveal reveal-delay-3"
+             tabindex="0" role="button" aria-label="Solr — Data Platform project">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop"
+               alt="Solr data analytics dashboard" loading="lazy" />
+          <div class="overlay">
+            <span class="text-sky-light text-xs tracking-widest uppercase font-semibold mb-2">Dashboard · 2023</span>
+            <h3 class="text-white font-heading font-black text-2xl leading-tight mb-1">Solr</h3>
+            <p class="text-white/70 text-sm">Data analytics platform</p>
+          </div>
+        </div>
+
+        <div class="work-card md:col-span-4 h-64 md:h-72 reveal reveal-delay-4"
+             tabindex="0" role="button" aria-label="Orb — Motion Design project">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80&auto=format&fit=crop"
+               alt="Orb motion design project" loading="lazy" />
+          <div class="overlay">
+            <span class="text-sky-light text-xs tracking-widest uppercase font-semibold mb-2">Motion · 2023</span>
+            <h3 class="text-white font-heading font-black text-2xl leading-tight mb-1">Orb</h3>
+            <p class="text-white/70 text-sm">Brand motion & visual identity</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="reveal flex justify-center mt-12">
+        <a href="#contact" class="btn-secondary px-8 py-4 text-base">View All Projects</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SERVICES
+  ════════════════════════════════════ -->
+  <section id="services" class="py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-white/50">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="reveal mb-16">
+        <div class="accent-line mb-4"></div>
+        <h2 class="section-title text-sky-deep">What We<br/><span class="gradient-text">Do Best</span></h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Service 1 -->
+        <article class="service-card p-8 reveal">
+          <div class="w-12 h-12 rounded-xl bg-sky-primary/10 flex items-center justify-center mb-6" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-black text-2xl text-sky-deep mb-3 leading-tight">Brand Identity</h3>
+          <p class="text-sky-deep/60 leading-relaxed text-sm">
+            Logos, systems, and guidelines that define who you are and how the world sees you.
+          </p>
+          <div class="mt-6 flex items-center gap-2 text-sky-primary text-sm font-semibold">
+            <span>Explore</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </article>
+
+        <!-- Service 2 -->
+        <article class="service-card p-8 reveal reveal-delay-1">
+          <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-black text-2xl text-sky-deep mb-3 leading-tight">Web Design & Dev</h3>
+          <p class="text-sky-deep/60 leading-relaxed text-sm">
+            Pixel-perfect interfaces built fast, accessible, and ready to convert.
+          </p>
+          <div class="mt-6 flex items-center gap-2 text-sky-primary text-sm font-semibold">
+            <span>Explore</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </article>
+
+        <!-- Service 3 -->
+        <article class="service-card p-8 reveal reveal-delay-2">
+          <div class="w-12 h-12 rounded-xl bg-sky-primary/10 flex items-center justify-center mb-6" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-black text-2xl text-sky-deep mb-3 leading-tight">Motion & 3D</h3>
+          <p class="text-sky-deep/60 leading-relaxed text-sm">
+            Animations, explainers, and 3D visuals that breathe life into your brand story.
+          </p>
+          <div class="mt-6 flex items-center gap-2 text-sky-primary text-sm font-semibold">
+            <span>Explore</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </article>
+
+        <!-- Service 4 -->
+        <article class="service-card p-8 reveal reveal-delay-3">
+          <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-black text-2xl text-sky-deep mb-3 leading-tight">UX Strategy</h3>
+          <p class="text-sky-deep/60 leading-relaxed text-sm">
+            Research, wireframes, and user journeys that remove friction and boost retention.
+          </p>
+          <div class="mt-6 flex items-center gap-2 text-sky-primary text-sm font-semibold">
+            <span>Explore</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </article>
+
+        <!-- Service 5 -->
+        <article class="service-card p-8 reveal reveal-delay-4">
+          <div class="w-12 h-12 rounded-xl bg-sky-primary/10 flex items-center justify-center mb-6" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-black text-2xl text-sky-deep mb-3 leading-tight">Growth & SEO</h3>
+          <p class="text-sky-deep/60 leading-relaxed text-sm">
+            Performance-focused builds with core web vitals that rank and convert.
+          </p>
+          <div class="mt-6 flex items-center gap-2 text-sky-primary text-sm font-semibold">
+            <span>Explore</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </article>
+
+        <!-- CTA card -->
+        <article class="service-card p-8 reveal reveal-delay-4 flex flex-col justify-between"
+             style="background:linear-gradient(135deg,#0EA5E9 0%,#0C4A6E 100%);border-color:transparent;">
+          <div>
+            <h3 class="font-heading font-black text-2xl text-white mb-3 leading-tight">Have a project?</h3>
+            <p class="text-white/70 leading-relaxed text-sm">
+              We love ambitious briefs. Tell us what you're building.
+            </p>
+          </div>
+          <a href="#contact" class="mt-8 inline-flex items-center gap-2 bg-white text-sky-primary font-bold text-sm px-6 py-3 rounded-full hover:bg-sky-bg transition-colors cursor-pointer">
+            Let's talk
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       ABOUT
+  ════════════════════════════════════ -->
+  <section id="about" class="py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Text -->
+        <div>
+          <div class="reveal">
+            <div class="accent-line mb-4"></div>
+            <h2 class="section-title text-sky-deep mb-8">We believe<br/>design<br/><span class="gradient-text">changes things.</span></h2>
+          </div>
+          <p class="reveal reveal-delay-1 text-sky-deep/65 text-lg leading-relaxed mb-6" style="line-height:1.7">
+            Apex Creative is a boutique studio of 14 designers, developers, and strategists obsessed with
+            craft. We partner with founders and growth-stage companies to turn complex problems into
+            elegant, memorable solutions.
+          </p>
+          <p class="reveal reveal-delay-2 text-sky-deep/65 text-lg leading-relaxed mb-10" style="line-height:1.7">
+            Every project starts with a stubborn question: <em>what would make this extraordinary?</em>
+            Then we don't stop until we find the answer.
+          </p>
+          <div class="reveal reveal-delay-3 flex flex-wrap gap-3">
+            <span class="px-4 py-2 rounded-full border border-sky-primary/20 text-sky-primary text-sm font-medium">Strategists</span>
+            <span class="px-4 py-2 rounded-full border border-sky-primary/20 text-sky-primary text-sm font-medium">Designers</span>
+            <span class="px-4 py-2 rounded-full border border-sky-primary/20 text-sky-primary text-sm font-medium">Engineers</span>
+            <span class="px-4 py-2 rounded-full border border-accent/20 text-accent text-sm font-medium">Storytellers</span>
+          </div>
+        </div>
+
+        <!-- Image collage -->
+        <div class="reveal reveal-delay-1 relative h-[520px]">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80&auto=format&fit=crop"
+               alt="Apex Creative team collaborating"
+               class="absolute left-0 top-0 w-3/4 h-72 object-cover rounded-2xl shadow-2xl"
+               loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&q=80&auto=format&fit=crop"
+               alt="Design process — sketching wireframes"
+               class="absolute right-0 bottom-0 w-2/3 h-80 object-cover rounded-2xl shadow-xl"
+               loading="lazy" />
+          <!-- Accent badge -->
+          <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                      bg-white shadow-2xl rounded-2xl p-5 flex flex-col items-center text-center z-10 w-36">
+            <p class="font-heading font-black text-4xl text-sky-deep leading-none">7</p>
+            <p class="text-sky-deep/50 text-xs mt-1 font-medium">Years of craft</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       TESTIMONIALS
+  ════════════════════════════════════ -->
+  <section class="py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-white/50">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="reveal mb-16">
+        <div class="accent-line mb-4"></div>
+        <h2 class="section-title text-sky-deep">Clients<br/><span class="gradient-text">Love Us</span></h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <article class="testimonial-card p-8 reveal">
+          <!-- Stars -->
+          <div class="flex gap-1 mb-5" aria-label="5 stars">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+          </div>
+          <blockquote class="text-sky-deep/75 leading-relaxed mb-6">
+            "Apex didn't just redesign our product — they transformed how our customers think about us.
+            Conversion went up 34% in the first month."
+          </blockquote>
+          <footer class="flex items-center gap-3">
+            <img src="https://i.pravatar.cc/48?img=11" alt="Sarah K." class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+            <div>
+              <p class="font-semibold text-sky-deep text-sm">Sarah K.</p>
+              <p class="text-sky-deep/45 text-xs">CEO, Flux Technologies</p>
+            </div>
+          </footer>
+        </article>
+
+        <article class="testimonial-card p-8 reveal reveal-delay-1">
+          <div class="flex gap-1 mb-5" aria-label="5 stars">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+          </div>
+          <blockquote class="text-sky-deep/75 leading-relaxed mb-6">
+            "The team brought clarity to a chaotic brief and shipped faster than any agency we'd worked with.
+            We've already referred them three times."
+          </blockquote>
+          <footer class="flex items-center gap-3">
+            <img src="https://i.pravatar.cc/48?img=33" alt="Marcus L." class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+            <div>
+              <p class="font-semibold text-sky-deep text-sm">Marcus L.</p>
+              <p class="text-sky-deep/45 text-xs">Co-founder, Nova Health</p>
+            </div>
+          </footer>
+        </article>
+
+        <article class="testimonial-card p-8 reveal reveal-delay-2">
+          <div class="flex gap-1 mb-5" aria-label="5 stars">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#F97316"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+          </div>
+          <blockquote class="text-sky-deep/75 leading-relaxed mb-6">
+            "I've never seen a studio care this much about the details. Our brand went from forgettable
+            to industry-defining in 8 weeks."
+          </blockquote>
+          <footer class="flex items-center gap-3">
+            <img src="https://i.pravatar.cc/48?img=44" alt="Priya M." class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+            <div>
+              <p class="font-semibold text-sky-deep text-sm">Priya M.</p>
+              <p class="text-sky-deep/45 text-xs">CMO, Veil Studio</p>
+            </div>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       CONTACT
+  ════════════════════════════════════ -->
+  <section id="contact" class="py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-20 items-start">
+
+        <!-- Left: copy -->
+        <div>
+          <div class="reveal">
+            <div class="accent-line mb-4"></div>
+            <h2 class="section-title text-sky-deep mb-6">Start<br/>something<br/><span class="gradient-text">bold.</span></h2>
+          </div>
+          <p class="reveal reveal-delay-1 text-sky-deep/60 text-lg leading-relaxed mb-10" style="line-height:1.7">
+            We take on 4–6 projects per quarter. If you're ready to move fast and aim high,
+            let's talk.
+          </p>
+          <div class="reveal reveal-delay-2 flex flex-col gap-4">
+            <a href="mailto:hello@apexcreative.co"
+               class="flex items-center gap-3 text-sky-primary hover:text-sky-deep transition-colors cursor-pointer group">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <span class="font-medium group-hover:underline">hello@apexcreative.co</span>
+            </a>
+            <a href="tel:+15558675309"
+               class="flex items-center gap-3 text-sky-primary hover:text-sky-deep transition-colors cursor-pointer group">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.46 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/>
+              </svg>
+              <span class="font-medium group-hover:underline">+1 (555) 867-5309</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <form class="reveal reveal-delay-1 flex flex-col gap-5" onsubmit="handleSubmit(event)" novalidate aria-label="Contact form">
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label for="name" class="block text-sky-deep/70 text-sm font-medium mb-2">Name</label>
+              <input id="name" name="name" type="text" placeholder="Jane Smith"
+                     class="form-input" autocomplete="name" required />
+            </div>
+            <div>
+              <label for="email" class="block text-sky-deep/70 text-sm font-medium mb-2">Email</label>
+              <input id="email" name="email" type="email" placeholder="jane@company.co"
+                     class="form-input" autocomplete="email" required />
+            </div>
+          </div>
+          <div>
+            <label for="service" class="block text-sky-deep/70 text-sm font-medium mb-2">Service</label>
+            <select id="service" name="service" class="form-input cursor-pointer" required>
+              <option value="" disabled selected>What are you looking for?</option>
+              <option value="brand">Brand Identity</option>
+              <option value="web">Web Design & Dev</option>
+              <option value="motion">Motion & 3D</option>
+              <option value="ux">UX Strategy</option>
+              <option value="seo">Growth & SEO</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+          <div>
+            <label for="message" class="block text-sky-deep/70 text-sm font-medium mb-2">Tell us about your project</label>
+            <textarea id="message" name="message" rows="5" placeholder="What are you building, and what does success look like?"
+                      class="form-input resize-none" required></textarea>
+          </div>
+          <button type="submit" id="submit-btn" class="btn-primary px-8 py-4 text-base w-full justify-center">
+            <span id="btn-text">Send Message</span>
+            <svg id="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <!-- Success msg -->
+          <p id="form-success" class="hidden text-sky-primary font-semibold text-center text-sm" role="status">
+            Thanks! We'll be in touch within 24 hours.
+          </p>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       FOOTER
+  ════════════════════════════════════ -->
+  <footer class="py-12 px-4 sm:px-6 lg:px-8 border-t border-sky-primary/10">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2" aria-label="Apex Creative">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#0EA5E9"/>
+          <path d="M8 24 L16 8 L24 24" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M11 19 L21 19" stroke="#F97316" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span style="font-family:'Archivo',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-0.03em;color:#0C4A6E;">APEX CREATIVE</span>
+      </a>
+
+      <p class="text-sky-deep/40 text-sm">&copy; 2026 Apex Creative Studio. All rights reserved.</p>
+
+      <!-- Social links -->
+      <div class="flex items-center gap-4">
+        <a href="#" aria-label="Twitter" class="w-9 h-9 rounded-full border border-sky-primary/20 flex items-center justify-center text-sky-primary hover:bg-sky-primary hover:text-white transition-colors cursor-pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-sky-primary/20 flex items-center justify-center text-sky-primary hover:bg-sky-primary hover:text-white transition-colors cursor-pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full border border-sky-primary/20 flex items-center justify-center text-sky-primary hover:bg-sky-primary hover:text-white transition-colors cursor-pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Dribbble" class="w-9 h-9 rounded-full border border-sky-primary/20 flex items-center justify-center text-sky-primary hover:bg-sky-primary hover:text-white transition-colors cursor-pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════ -->
+  <script>
+    // ── Custom cursor ──
+    const cursor     = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursor-ring');
+
+    let mouseX = 0, mouseY = 0;
+    let ringX  = 0, ringY  = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top  = mouseY + 'px';
+    });
+
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top  = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+
+    // ── Navbar scroll ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+
+    // ── Mobile menu ──
+    const menuBtn   = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuClose  = document.getElementById('menu-close');
+
+    function openMobileMenu() {
+      mobileMenu.classList.remove('hidden');
+      mobileMenu.classList.add('flex');
+      menuBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    menuBtn.addEventListener('click', openMobileMenu);
+    menuClose.addEventListener('click', closeMobileMenu);
+    mobileMenu.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileMenu(); });
+
+
+    // ── Reveal on scroll ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // Trigger reveals already in view
+    window.addEventListener('load', () => {
+      revealEls.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.9) el.classList.add('visible');
+      });
+    });
+
+
+    // ── Counter animation ──
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target, 10);
+      const duration = 1400;
+      const start = performance.now();
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    const counterObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+
+    // ── Contact form ──
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn  = document.getElementById('submit-btn');
+      const text = document.getElementById('btn-text');
+      const icon = document.getElementById('btn-icon');
+
+      btn.disabled = true;
+      text.textContent = 'Sending…';
+      icon.innerHTML = `<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"
+        stroke-dasharray="31.4" stroke-dashoffset="31.4" style="animation:spin .8s linear infinite">
+        </circle>`;
+
+      setTimeout(() => {
+        btn.disabled = false;
+        text.textContent = 'Send Message';
+        icon.innerHTML = `<path d="M5 12h14M12 5l7 7-7 7"/>`;
+        document.getElementById('form-success').classList.remove('hidden');
+        e.target.reset();
+      }, 1800);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+    document.head.appendChild(style);
+  </script>
+
+</body>
+</html>
