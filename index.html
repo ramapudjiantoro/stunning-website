@@ -239,6 +239,19 @@
       height: 56px;
       border-color: #F97316;
     }
+    .dark #cursor {
+      background: #F97316;
+      mix-blend-mode: normal;
+    }
+    .dark #cursor-ring {
+      border-color: #38BDF8;
+    }
+    .dark body:has(a:hover, button:hover, .work-card:hover) #cursor {
+      background: #38BDF8;
+    }
+    .dark body:has(a:hover, button:hover, .work-card:hover) #cursor-ring {
+      border-color: #F97316;
+    }
     @media (hover: none) { #cursor, #cursor-ring { display: none; } }
 
     /* ── Horizontal rule accent ── */
