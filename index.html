@@ -59,6 +59,13 @@
       line-height: 0.95;
     }
 
+    @media (max-width: 639px) {
+      .hero-title {
+        font-size: clamp(4.5rem, 18vw, 5.5rem);
+        line-height: 0.88;
+      }
+    }
+
     /* ── Gradient text ── */
     .gradient-text {
       background: linear-gradient(135deg, #0EA5E9 0%, #38BDF8 40%, #F97316 100%);
@@ -482,12 +489,12 @@
       </p>
 
       <!-- CTAs -->
-      <div class="reveal reveal-delay-3 flex flex-wrap gap-4">
-        <a href="#work" class="btn-primary px-8 py-4 text-base">
+      <div class="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4">
+        <a href="#work" class="btn-primary px-8 py-5 text-xl sm:py-4 sm:text-base w-full sm:w-auto justify-center">
           See Our Work
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#contact" class="btn-secondary px-8 py-4 text-base">Start a Project</a>
+        <a href="#contact" class="btn-secondary px-8 py-5 text-xl sm:py-4 sm:text-base w-full sm:w-auto justify-center">Start a Project</a>
       </div>
 
       <!-- Stats row -->
